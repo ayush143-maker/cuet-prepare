@@ -7,11 +7,11 @@
 }
 
 body {
-  @apply bg-background text-zinc-100 antialiased;
+  @apply bg-[#05060f] text-zinc-100 antialiased;
 }
 
 .glass-card {
-  @apply rounded-3xl border border-white/10 bg-white/5 backdrop-blur-2xl shadow-glass;
+  @apply rounded-3xl border border-white/10 bg-white/5 backdrop-blur-2xl shadow-2xl;
 }
 
 .gradient-text {
