@@ -37,7 +37,7 @@ const features = [
 
 export default function HomePage() {
   return (
-    <main className="relative min-h-screen overflow-hidden bg-hero-gradient">
+    <main className="relative min-h-screen overflow-hidden">
       <div className="pointer-events-none absolute -top-40 left-1/2 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-indigo-500/20 blur-[120px]" />
       <div className="pointer-events-none absolute bottom-0 right-0 h-[400px] w-[500px] rounded-full bg-cyan-400/10 blur-[100px]" />
 
@@ -75,9 +75,7 @@ export default function HomePage() {
               className="glass-card p-6 text-left transition hover:scale-[1.02] hover:border-white/20"
             >
               <feature.icon className="h-10 w-10 rounded-2xl bg-white/5 p-2 text-cyan-300" />
-              <h3 className="mt-4 text-lg font-semibold">
-                {feature.title}
-              </h3>
+              <h3 className="mt-4 text-lg font-semibold">{feature.title}</h3>
               <p className="mt-2 text-sm leading-6 text-zinc-400">
                 {feature.description}
               </p>
