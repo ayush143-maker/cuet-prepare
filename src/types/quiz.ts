@@ -1,4 +1,5 @@
 import type { Difficulty, ExamSection } from "./question";
+import type { TopicStat, SubjectStat } from "./analytics";
 
 export type QuizMode =
   | "practice"
@@ -16,13 +17,15 @@ export type AnswerStatus =
   | "incorrect"
   | "skipped";
 
+export type DifficultyFilter = Difficulty | "mixed";
+
 export interface QuizConfig {
   mode: QuizMode;
   title: string;
   section?: ExamSection;
   subject?: string;
   topics?: string[];
-  difficulty?: Difficulty;
+  difficulty?: DifficultyFilter;
   year?: number;
   questionCount: number;
   timeLimitSeconds: number;
@@ -50,11 +53,14 @@ export interface AnswerRecord {
   correctIndex: number;
   status: AnswerStatus;
   timeTakenSeconds: number;
+  scoreDelta: number;
 }
 
 export interface QuizResult {
   id: string;
   sessionId: string;
+  title: string;
+  date: string;
   score: number;
   maxScore: number;
   correctCount: number;
@@ -65,25 +71,4 @@ export interface QuizResult {
   answers: AnswerRecord[];
   topicStats: TopicStat[];
   subjectStats: SubjectStat[];
-}
-
-export interface TopicStat {
-  subject: string;
-  topic: string;
-  total: number;
-  correct: number;
-  incorrect: number;
-  skipped: number;
-  accuracy: number;
-  avgTimeSeconds: number;
-}
-
-export interface SubjectStat {
-  subject: string;
-  total: number;
-  correct: number;
-  incorrect: number;
-  skipped: number;
-  accuracy: number;
-  avgTimeSeconds: number;
 }
