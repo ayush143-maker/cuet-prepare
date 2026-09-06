@@ -1,0 +1,72 @@
+[
+  {
+    "id": "eng_syn_002",
+    "section": "language",
+    "subject": "English",
+    "topic": "Vocabulary",
+    "subtopic": "Synonyms",
+    "difficulty": "easy",
+    "question": "Choose the synonym of 'Abundant':",
+    "options": ["Scarce", "Plentiful", "Rare", "Weak"],
+    "correctIndex": 1,
+    "explanation": "Abundant ka matlab plentiful hota hai.",
+    "source": "sample",
+    "tags": ["vocabulary", "synonyms"]
+  },
+  {
+    "id": "eng_ant_001",
+    "section": "language",
+    "subject": "English",
+    "topic": "Vocabulary",
+    "subtopic": "Antonyms",
+    "difficulty": "easy",
+    "question": "Choose the antonym of 'Ancient':",
+    "options": ["Old", "Modern", "Antique", "Historical"],
+    "correctIndex": 1,
+    "explanation": "Ancient ka opposite modern hota hai.",
+    "source": "sample",
+    "tags": ["vocabulary", "antonyms"]
+  },
+  {
+    "id": "eng_grammar_002",
+    "section": "language",
+    "subject": "English",
+    "topic": "Grammar",
+    "subtopic": "Subject-Verb Agreement",
+    "difficulty": "easy",
+    "question": "Fill in the blank: 'She ___ singing a song.'",
+    "options": ["are", "is", "am", "be"],
+    "correctIndex": 1,
+    "explanation": "'She' ke saath 'is' use hota hai.",
+    "source": "sample",
+    "tags": ["grammar", "verbs"]
+  },
+  {
+    "id": "eng_idiom_001",
+    "section": "language",
+    "subject": "English",
+    "topic": "Vocabulary",
+    "subtopic": "Idioms",
+    "difficulty": "medium",
+    "question": "The idiom 'a piece of cake' means?",
+    "options": ["A sweet dish", "Something very easy", "A difficult task", "A small gift"],
+    "correctIndex": 1,
+    "explanation": "'A piece of cake' ka matlab bahut aasan kaam.",
+    "source": "sample",
+    "tags": ["idioms", "vocabulary"]
+  },
+  {
+    "id": "eng_spell_001",
+    "section": "language",
+    "subject": "English",
+    "topic": "Grammar",
+    "subtopic": "Spelling",
+    "difficulty": "easy",
+    "question": "Choose the correctly spelled word:",
+    "options": ["Recieve", "Receive", "Receve", "Recive"],
+    "correctIndex": 1,
+    "explanation": "Correct spelling 'Receive' hai.",
+    "source": "sample",
+    "tags": ["spelling", "grammar"]
+  }
+]
