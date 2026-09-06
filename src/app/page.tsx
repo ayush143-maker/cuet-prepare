@@ -2,6 +2,7 @@ import {
   CtaSection,
   FeatureGrid,
   HomeHero,
+  HowItWorks,
   ModeGrid,
   StatsStrip,
   SubjectGrid,
@@ -11,9 +12,10 @@ import { AppShell, PageShell } from "@/components/layout";
 export default function HomePage() {
   return (
     <AppShell>
-      <PageShell className="py-20">
+      <PageShell className="py-24">
         <HomeHero />
         <StatsStrip />
+        <HowItWorks />
         <FeatureGrid />
         <ModeGrid />
         <SubjectGrid />
