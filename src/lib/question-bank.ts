@@ -8,6 +8,18 @@ import mathematicsQuestionsRaw from "../../data/questions/mathematics.json";
 import generalTestQuestionsRaw from "../../data/questions/general-test.json";
 import englishQuestionsRaw from "../../data/questions/english.json";
 import scienceQuestionsRaw from "../../data/questions/science.json";
+import physicsQuestionsRaw from "../../data/questions/physics.json";
+import physics2QuestionsRaw from "../../data/questions/physics-2.json";
+import chemistry1QuestionsRaw from "../../data/questions/chemistry-1.json";
+import chemistry2QuestionsRaw from "../../data/questions/chemistry-2.json";
+import maths1QuestionsRaw from "../../data/questions/maths-1.json";
+import maths2QuestionsRaw from "../../data/questions/maths-2.json";
+import biology1QuestionsRaw from "../../data/questions/biology-1.json";
+import biology2QuestionsRaw from "../../data/questions/biology-2.json";
+import english1QuestionsRaw from "../../data/questions/english-1.json";
+import english2QuestionsRaw from "../../data/questions/english-2.json";
+import gat1QuestionsRaw from "../../data/questions/gat-1.json";
+import gat2QuestionsRaw from "../../data/questions/gat-2.json";
 import pyq2022Raw from "../../data/pyq/2022.json";
 import pyq2023Raw from "../../data/pyq/2023.json";
 import pyq2024Raw from "../../data/pyq/2024.json";
@@ -74,6 +86,18 @@ const loadedQuestions: Question[] = [
   ...normalizeQuestions(generalTestQuestionsRaw, "sample"),
   ...normalizeQuestions(englishQuestionsRaw, "sample"),
   ...normalizeQuestions(scienceQuestionsRaw, "sample"),
+  ...normalizeQuestions(physicsQuestionsRaw, "sample"),
+  ...normalizeQuestions(physics2QuestionsRaw, "sample"),
+  ...normalizeQuestions(chemistry1QuestionsRaw, "sample"),
+  ...normalizeQuestions(chemistry2QuestionsRaw, "sample"),
+  ...normalizeQuestions(maths1QuestionsRaw, "sample"),
+  ...normalizeQuestions(maths2QuestionsRaw, "sample"),
+  ...normalizeQuestions(biology1QuestionsRaw, "sample"),
+  ...normalizeQuestions(biology2QuestionsRaw, "sample"),
+  ...normalizeQuestions(english1QuestionsRaw, "sample"),
+  ...normalizeQuestions(english2QuestionsRaw, "sample"),
+  ...normalizeQuestions(gat1QuestionsRaw, "sample"),
+  ...normalizeQuestions(gat2QuestionsRaw, "sample"),
   ...normalizeQuestions(pyq2022Raw, "pyq"),
   ...normalizeQuestions(pyq2023Raw, "pyq"),
   ...normalizeQuestions(pyq2024Raw, "pyq"),
