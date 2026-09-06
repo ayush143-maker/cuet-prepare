@@ -1,0 +1,47 @@
+[
+  {
+    "id": "mathematics",
+    "name": "Mathematics",
+    "section": "domain"
+  },
+  {
+    "id": "physics",
+    "name": "Physics",
+    "section": "domain"
+  },
+  {
+    "id": "chemistry",
+    "name": "Chemistry",
+    "section": "domain"
+  },
+  {
+    "id": "biology",
+    "name": "Biology",
+    "section": "domain"
+  },
+  {
+    "id": "english",
+    "name": "English",
+    "section": "language"
+  },
+  {
+    "id": "history",
+    "name": "History",
+    "section": "domain"
+  },
+  {
+    "id": "political-science",
+    "name": "Political Science",
+    "section": "domain"
+  },
+  {
+    "id": "economics",
+    "name": "Economics",
+    "section": "domain"
+  },
+  {
+    "id": "general-test",
+    "name": "General Test",
+    "section": "general"
+  }
+]
