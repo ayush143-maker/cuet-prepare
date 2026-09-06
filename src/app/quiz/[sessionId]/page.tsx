@@ -4,17 +4,21 @@ import { use, useState } from "react";
 import {
   ChevronLeft,
   ChevronRight,
-  Flag,
   FileSearch,
+  Flag,
   Send,
   Trophy,
 } from "lucide-react";
 
 import { AppShell, PageShell } from "@/components/layout";
 import {
+  ConfettiTrigger,
+  ExplanationBox,
+  KeyboardShortcutsCard,
   QuestionCard,
   QuestionPalette,
   QuizHeader,
+  QuizSummaryStrip,
   SubmitModal,
 } from "@/components/quiz";
 import { Button, ButtonLink } from "@/components/ui/button";
@@ -70,6 +74,8 @@ export default function QuizPage({ params }: Props) {
     return (
       <AppShell>
         <PageShell>
+          <ConfettiTrigger fire={result.accuracy >= 80} />
+
           <div className="glass-card mx-auto max-w-xl p-10 text-center">
             <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-400/10">
               <Trophy className="h-7 w-7 text-emerald-300" />
@@ -82,6 +88,16 @@ export default function QuizPage({ params }: Props) {
               {result.accuracy}% • Time:{" "}
               {formatTime(result.totalTimeTakenSeconds)}
             </p>
+
+            {result.accuracy >= 80 ? (
+              <p className="mt-2 text-sm font-semibold text-emerald-300">
+                Excellent performance. Confetti earned.
+              </p>
+            ) : (
+              <p className="mt-2 text-sm text-zinc-500">
+                Weak topics check karo aur next attempt me improve karo.
+              </p>
+            )}
 
             <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
               <ButtonLink href={`/results/${result.id}`}>
@@ -118,13 +134,31 @@ export default function QuizPage({ params }: Props) {
   }
 
   const attempted = getAttemptedCount(session.answers);
+  const markedCount = Object.values(session.markedForReview).filter(
+    Boolean
+  ).length;
   const isLastQuestion = session.currentIndex === questions.length - 1;
   const isMarked = Boolean(session.markedForReview[currentQuestion.id]);
+  const hasSelectedAnswer =
+    session.answers[currentQuestion.id] !== null &&
+    session.answers[currentQuestion.id] !== undefined;
 
   return (
     <AppShell>
       <PageShell className="py-10">
         <QuizHeader session={session} />
+
+        <QuizSummaryStrip
+          className="mt-6"
+          total={questions.length}
+          attempted={attempted}
+          marked={markedCount}
+          remainingSeconds={
+            session.config.timeLimitSeconds > 0
+              ? session.remainingSeconds
+              : undefined
+          }
+        />
 
         <div className="mt-8 grid gap-6 lg:grid-cols-[1fr_320px]">
           <div className="space-y-6">
@@ -137,6 +171,14 @@ export default function QuizPage({ params }: Props) {
                 selectAnswer(currentQuestion.id, optionIndex)
               }
             />
+
+            {session.config.showExplanationInstantly &&
+            hasSelectedAnswer ? (
+              <ExplanationBox
+                explanation={currentQuestion.explanation}
+                title="Instant Explanation"
+              />
+            ) : null}
 
             <div className="glass-card flex flex-wrap items-center justify-between gap-4 p-6">
               <Button
@@ -175,7 +217,7 @@ export default function QuizPage({ params }: Props) {
             </div>
           </div>
 
-          <aside>
+          <aside className="space-y-6">
             <QuestionPalette
               questions={questions}
               answers={session.answers}
@@ -183,6 +225,8 @@ export default function QuizPage({ params }: Props) {
               currentIndex={session.currentIndex}
               onSelect={goToQuestion}
             />
+
+            <KeyboardShortcutsCard />
           </aside>
         </div>
 
