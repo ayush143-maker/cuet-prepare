@@ -1,0 +1,34 @@
+[
+  {
+    "id": "pyq_2023_math_matrices_001",
+    "section": "domain",
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "subtopic": "Order of Matrix",
+    "difficulty": "medium",
+    "question": "If A is a 3x2 matrix and B is a 2x4 matrix, what is the order of AB?",
+    "options": ["3x4", "2x2", "3x2", "4x3"],
+    "correctIndex": 0,
+    "explanation": "A(m x n) * B(n x p) results in a matrix of order m x p.",
+    "year": 2023,
+    "paperId": "cuet-ug-2023-mathematics",
+    "source": "pyq",
+    "tags": ["matrices", "order"]
+  },
+  {
+    "id": "pyq_2023_general_quant_001",
+    "section": "general",
+    "subject": "General Test",
+    "topic": "Quantitative Aptitude",
+    "subtopic": "Percentage",
+    "difficulty": "easy",
+    "question": "What is 30% of 450?",
+    "options": ["115", "125", "135", "145"],
+    "correctIndex": 2,
+    "explanation": "450 * 30 / 100 = 135.",
+    "year": 2023,
+    "paperId": "cuet-ug-2023",
+    "source": "pyq",
+    "tags": ["percentage", "quant"]
+  }
+]
