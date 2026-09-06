@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+import { ThunderLogo } from "./thunder-logo";
 
 const navLinks = [
   {
@@ -52,9 +53,7 @@ export function Navbar() {
     <header className="sticky top-0 z-50 border-b border-white/10 bg-[#05060f]/80 backdrop-blur-2xl">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
         <Link href="/" className="flex items-center gap-2 font-bold">
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-indigo-500 via-fuchsia-500 to-cyan-400 text-lg">
-            ⚡
-          </span>
+          <ThunderLogo className="h-7 w-7 drop-shadow-[0_0_8px_rgba(232,121,249,0.45)]" />
           CUET Prep Arena
         </Link>
 
