@@ -2,24 +2,27 @@
 
 import { useEffect, useState } from "react";
 import {
+  Brain,
   Clock,
+  GraduationCap,
   History,
   Target,
+  Timer,
   Trash2,
   TrendingUp,
   Trophy,
 } from "lucide-react";
 
+import {
+  AttemptList,
+  InsightCard,
+  StatCard,
+} from "@/components/dashboard";
 import { AppShell, PageShell } from "@/components/layout";
 import { Button, ButtonLink } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { EmptyState } from "@/components/ui/empty-state";
-import { Progress } from "@/components/ui/progress";
+import { SectionHeading } from "@/components/ui";
+import { getRecommendation } from "@/lib/analytics";
 import { formatTime } from "@/lib/utils";
 import {
   getDashboardStats,
@@ -49,6 +52,7 @@ export default function DashboardPage() {
   }
 
   const stats = getDashboardStats(attempts);
+  const latestAttempt = attempts[0];
 
   if (attempts.length === 0) {
     return (
@@ -69,26 +73,34 @@ export default function DashboardPage() {
     );
   }
 
+  const recommendation = latestAttempt
+    ? getRecommendation(latestAttempt.topicStats)
+    : null;
+
   return (
     <AppShell>
       <PageShell>
         <div className="mb-10 flex flex-col justify-between gap-6 md:flex-row md:items-end">
-          <div>
-            <h1 className="section-title">
-              Your <span className="gradient-text">Dashboard</span>
-            </h1>
-
-            <p className="section-subtitle mt-3">
-              Attempts, accuracy aur time management ek jagah.
-            </p>
-          </div>
+          <SectionHeading
+            eyebrow="Dashboard"
+            title={
+              <>
+                Your <span className="gradient-text">Prep HQ</span>
+              </>
+            }
+            subtitle="Attempts, accuracy, time management aur smart recommendations — sab ek jagah."
+          />
 
           <div className="flex flex-wrap gap-3">
             <ButtonLink href="/practice">
               New Practice
             </ButtonLink>
 
-            <Button variant="secondary" onClick={clearHistory}>
+            <ButtonLink href="/pyq" variant="secondary">
+              Solve PYQ
+            </ButtonLink>
+
+            <Button variant="ghost" onClick={clearHistory}>
               <Trash2 className="h-5 w-5" />
               Clear History
             </Button>
@@ -96,138 +108,73 @@ export default function DashboardPage() {
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-          <Card>
-            <CardContent className="p-6">
-              <Trophy className="h-6 w-6 text-amber-300" />
-              <p className="mt-4 text-sm text-zinc-400">Total Attempts</p>
-              <p className="mt-2 text-3xl font-black">
-                {stats.totalAttempts}
-              </p>
-            </CardContent>
-          </Card>
+          <StatCard
+            icon={Trophy}
+            label="Total Attempts"
+            value={String(stats.totalAttempts)}
+            description="Quiz attempts completed so far."
+            iconClassName="text-amber-300"
+          />
 
-          <Card>
-            <CardContent className="p-6">
-              <Target className="h-6 w-6 text-cyan-300" />
-              <p className="mt-4 text-sm text-zinc-400">Average Accuracy</p>
-              <p className="mt-2 text-3xl font-black">
-                {stats.averageAccuracy}%
-              </p>
+          <StatCard
+            icon={Target}
+            label="Average Accuracy"
+            value={`${stats.averageAccuracy}%`}
+            description="Overall correctness across attempts."
+            iconClassName="text-cyan-300"
+          />
 
-              <Progress
-                className="mt-4"
-                value={stats.averageAccuracy}
-                max={100}
-              />
-            </CardContent>
-          </Card>
+          <StatCard
+            icon={Clock}
+            label="Avg Time / Question"
+            value={formatTime(stats.averageTimePerQuestionSeconds)}
+            description="Speed matters, but accuracy first."
+            iconClassName="text-emerald-300"
+          />
 
-          <Card>
-            <CardContent className="p-6">
-              <Clock className="h-6 w-6 text-emerald-300" />
-              <p className="mt-4 text-sm text-zinc-400">
-                Avg Time / Question
-              </p>
-              <p className="mt-2 text-3xl font-black">
-                {formatTime(stats.averageTimePerQuestionSeconds)}
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent className="p-6">
-              <TrendingUp className="h-6 w-6 text-fuchsia-300" />
-              <p className="mt-4 text-sm text-zinc-400">Weekly Growth</p>
-              <p className="mt-2 text-3xl font-black">
-                {stats.weeklyGrowthPercentage}%
-              </p>
-            </CardContent>
-          </Card>
+          <StatCard
+            icon={TrendingUp}
+            label="Weekly Growth"
+            value={`${stats.weeklyGrowthPercentage}%`}
+            description="Based on recent attempt accuracy."
+            iconClassName="text-fuchsia-300"
+          />
         </div>
 
-        <div className="mt-8 grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-          <Card>
-            <CardHeader>
-              <CardTitle>Recent Attempts</CardTitle>
-            </CardHeader>
+        <div className="mt-8 grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
+          <AttemptList attempts={attempts} maxItems={8} />
 
-            <CardContent className="space-y-4">
-              {attempts.slice(0, 8).map((attempt) => (
-                <div
-                  key={attempt.id}
-                  className="rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:bg-white/10"
-                >
-                  <div className="flex flex-wrap items-center justify-between gap-4">
-                    <div>
-                      <h3 className="font-semibold">{attempt.title}</h3>
+          <div className="space-y-6">
+            {recommendation ? (
+              <InsightCard
+                icon={Brain}
+                tone="warning"
+                title={recommendation.title}
+                description={recommendation.description}
+              />
+            ) : null}
 
-                      <p className="mt-1 text-sm text-zinc-400">
-                        Score: {attempt.score}/{attempt.maxScore} • Accuracy:{" "}
-                        {attempt.accuracy}%
-                      </p>
-                    </div>
+            <InsightCard
+              icon={Target}
+              tone="info"
+              title="Accuracy Focus"
+              description="Agar average accuracy 70% se kam hai, to pehle bina timer ke concept-based questions solve karo."
+            />
 
-                    <div className="text-right">
-                      <p className="text-sm text-zinc-400">Time</p>
-                      <p className="font-semibold">
-                        {formatTime(attempt.totalTimeTakenSeconds)}
-                      </p>
-                    </div>
-                  </div>
+            <InsightCard
+              icon={Timer}
+              tone="success"
+              title="Time Focus"
+              description="Agar average time per question 70s se zyada hai, to short drills karo: 10 questions, 8 minutes."
+            />
 
-                  <div className="mt-4">
-                    <ButtonLink
-                      href={`/results/${attempt.id}`}
-                      variant="secondary"
-                      size="sm"
-                    >
-                      View Result
-                    </ButtonLink>
-                  </div>
-                </div>
-              ))}
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Quick Insight</CardTitle>
-            </CardHeader>
-
-            <CardContent className="space-y-4">
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-                <p className="text-sm font-semibold text-cyan-300">
-                  Accuracy Focus
-                </p>
-
-                <p className="mt-2 text-sm leading-6 text-zinc-400">
-                  Agar average accuracy 70% se kam hai, to pehle bina timer ke
-                  concept-based questions solve karo.
-                </p>
-              </div>
-
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-                <p className="text-sm font-semibold text-fuchsia-300">
-                  Time Focus
-                </p>
-
-                <p className="mt-2 text-sm leading-6 text-zinc-400">
-                  Agar average time per question 70s se zyada hai, to short
-                  drills karo: 10 questions, 8 minutes.
-                </p>
-              </div>
-
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-                <p className="text-sm font-semibold text-emerald-300">
-                  PYQ Focus
-                </p>
-
-                <p className="mt-2 text-sm leading-6 text-zinc-400">
-                  Week me kam se kam 2 PYQ papers exam mode me solve karo.
-                </p>
-              </div>
-            </CardContent>
-          </Card>
+            <InsightCard
+              icon={GraduationCap}
+              tone="info"
+              title="PYQ Focus"
+              description="Week me kam se kam 2 PYQ papers exam mode me solve karo."
+            />
+          </div>
         </div>
       </PageShell>
     </AppShell>
