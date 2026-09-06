@@ -1,33 +1,49 @@
-import { Card } from "@/components/ui/card";
+import { AnimatedCounter } from "@/components/ui/animated-counter";
 
 const stats = [
   {
     label: "Practice Questions",
-    value: "500+",
+    value: 500,
+    suffix: "+",
   },
   {
-    label: "PYQ Papers",
-    value: "5 Years",
+    label: "PYQ Years",
+    value: 5,
+    suffix: "",
   },
   {
-    label: "Analytics",
-    value: "Topic-wise",
+    label: "Topics Covered",
+    value: 30,
+    suffix: "+",
   },
   {
-    label: "Exam Mode",
-    value: "Timer + Marking",
+    label: "Avg Accuracy Target",
+    value: 80,
+    suffix: "%",
   },
 ];
 
 export function StatsStrip() {
   return (
-    <section className="mt-20 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-      {stats.map((stat) => (
-        <Card key={stat.label} className="p-6 text-center">
-          <p className="text-3xl font-black">{stat.value}</p>
-          <p className="mt-2 text-sm text-zinc-400">{stat.label}</p>
-        </Card>
-      ))}
+    <section className="mt-24">
+      <div className="glass-card grid gap-8 p-8 sm:grid-cols-2 lg:grid-cols-4">
+        {stats.map((stat, index) => (
+          <div
+            key={stat.label}
+            className={`flex flex-col gap-1 ${
+              index > 0 ? "lg:border-l lg:border-white/10 lg:pl-8" : ""
+            }`}
+          >
+            <AnimatedCounter
+              value={stat.value}
+              suffix={stat.suffix}
+              className="font-display text-4xl font-bold text-white"
+            />
+
+            <span className="text-sm text-zinc-400">{stat.label}</span>
+          </div>
+        ))}
+      </div>
     </section>
   );
 }
