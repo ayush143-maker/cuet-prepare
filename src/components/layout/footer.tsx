@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Github, Heart, Settings as SettingsIcon, Sparkles } from "lucide-react";
+import { Heart, Settings as SettingsIcon } from "lucide-react";
 
 const footerLinks = [
   {
@@ -24,6 +24,9 @@ const footerLinks = [
   },
 ];
 
+const shineText =
+  "bg-gradient-to-r from-cyan-200 via-white to-fuchsia-200 bg-clip-text font-semibold text-transparent drop-shadow-[0_0_6px_rgba(103,232,249,0.35)]";
+
 export function Footer() {
   return (
     <footer className="border-t border-white/10 bg-[#05060f]/80">
@@ -31,8 +34,8 @@ export function Footer() {
         <div className="grid gap-10 md:grid-cols-[1.2fr_0.8fr]">
           <div>
             <div className="flex items-center gap-2 font-bold">
-              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-indigo-500 via-fuchsia-500 to-cyan-400">
-                <Sparkles className="h-4 w-4 text-white" />
+              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-indigo-500 via-fuchsia-500 to-cyan-400 text-lg">
+                ⚡
               </span>
               CUET Prep Arena
             </div>
@@ -73,8 +76,9 @@ export function Footer() {
           <p>Built for CUET aspirants.</p>
 
           <p className="inline-flex items-center gap-2">
-            Made with <Heart className="h-4 w-4 text-rose-400" /> and Next.js
-            <Github className="h-4 w-4" />
+            Build by <span className={shineText}>Ayx</span> with{" "}
+            <span className={shineText}>Next.js</span>
+            <Heart className="h-4 w-4 text-rose-400" />
           </p>
         </div>
       </div>
