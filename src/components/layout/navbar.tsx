@@ -10,7 +10,6 @@ import {
   LayoutDashboard,
   Menu,
   Settings as SettingsIcon,
-  Sparkles,
   X,
 } from "lucide-react";
 
@@ -53,8 +52,8 @@ export function Navbar() {
     <header className="sticky top-0 z-50 border-b border-white/10 bg-[#05060f]/80 backdrop-blur-2xl">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
         <Link href="/" className="flex items-center gap-2 font-bold">
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-indigo-500 via-fuchsia-500 to-cyan-400">
-            <Sparkles className="h-4 w-4 text-white" />
+          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-indigo-500 via-fuchsia-500 to-cyan-400 text-lg">
+            ⚡
           </span>
           CUET Prep Arena
         </Link>
