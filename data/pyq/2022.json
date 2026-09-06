@@ -1,0 +1,34 @@
+[
+  {
+    "id": "pyq_2022_math_probability_001",
+    "section": "domain",
+    "subject": "Mathematics",
+    "topic": "Probability",
+    "subtopic": "Dice Probability",
+    "difficulty": "easy",
+    "question": "If a fair die is rolled once, what is the probability of getting an even number?",
+    "options": ["1/6", "1/3", "1/2", "2/3"],
+    "correctIndex": 2,
+    "explanation": "Even numbers are 2, 4, 6. So favorable outcomes = 3, total outcomes = 6.",
+    "year": 2022,
+    "paperId": "cuet-ug-2022",
+    "source": "pyq",
+    "tags": ["probability", "dice"]
+  },
+  {
+    "id": "pyq_2022_english_grammar_001",
+    "section": "language",
+    "subject": "English",
+    "topic": "Grammar",
+    "subtopic": "Articles",
+    "difficulty": "easy",
+    "question": "Choose the correct option: 'He is ___ honest man.'",
+    "options": ["a", "an", "the", "no article"],
+    "correctIndex": 1,
+    "explanation": "'Honest' starts with a vowel sound, so 'an' is used.",
+    "year": 2022,
+    "paperId": "cuet-ug-2022",
+    "source": "pyq",
+    "tags": ["grammar", "articles"]
+  }
+]
