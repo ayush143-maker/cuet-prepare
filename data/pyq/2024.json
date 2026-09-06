@@ -1,0 +1,34 @@
+[
+  {
+    "id": "pyq_2024_general_reasoning_001",
+    "section": "general",
+    "subject": "General Test",
+    "topic": "Logical Reasoning",
+    "subtopic": "Series",
+    "difficulty": "medium",
+    "question": "Find the next number: 2, 6, 12, 20, 30, ?",
+    "options": ["40", "42", "44", "46"],
+    "correctIndex": 1,
+    "explanation": "Differences are 4, 6, 8, 10, so next difference is 12. 30 + 12 = 42.",
+    "year": 2024,
+    "paperId": "cuet-ug-2024",
+    "source": "pyq",
+    "tags": ["series", "reasoning"]
+  },
+  {
+    "id": "pyq_2024_physics_mechanics_001",
+    "section": "domain",
+    "subject": "Physics",
+    "topic": "Mechanics",
+    "subtopic": "Motion",
+    "difficulty": "medium",
+    "question": "Acceleration due to gravity on Earth is approximately?",
+    "options": ["8.9 m/s²", "9.8 m/s²", "10.8 m/s²", "11.2 m/s²"],
+    "correctIndex": 1,
+    "explanation": "Standard value of g is approximately 9.8 m/s².",
+    "year": 2024,
+    "paperId": "cuet-ug-2024",
+    "source": "pyq",
+    "tags": ["mechanics", "gravity"]
+  }
+]
