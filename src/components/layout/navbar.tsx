@@ -9,6 +9,7 @@ import {
   Home,
   LayoutDashboard,
   Menu,
+  Settings as SettingsIcon,
   Sparkles,
   X,
 } from "lucide-react";
@@ -36,10 +37,16 @@ const navLinks = [
     label: "Dashboard",
     icon: LayoutDashboard,
   },
+  {
+    href: "/settings",
+    label: "Settings",
+    icon: SettingsIcon,
+  },
 ];
 
 export function Navbar() {
   const pathname = usePathname();
+
   const [open, setOpen] = useState(false);
 
   return (
