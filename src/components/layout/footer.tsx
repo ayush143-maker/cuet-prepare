@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { Heart, Settings as SettingsIcon } from "lucide-react";
 
+import { ThunderLogo } from "./thunder-logo";
+
 const footerLinks = [
   {
     href: "/",
@@ -34,9 +36,7 @@ export function Footer() {
         <div className="grid gap-10 md:grid-cols-[1.2fr_0.8fr]">
           <div>
             <div className="flex items-center gap-2 font-bold">
-              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-indigo-500 via-fuchsia-500 to-cyan-400 text-lg">
-                ⚡
-              </span>
+              <ThunderLogo className="h-7 w-7 drop-shadow-[0_0_8px_rgba(232,121,249,0.45)]" />
               CUET Prep Arena
             </div>
 
