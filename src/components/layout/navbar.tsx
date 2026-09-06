@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   BookOpen,
   GraduationCap,
@@ -48,10 +48,39 @@ export function Navbar() {
   const pathname = usePathname();
 
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => {
+      setScrolled(window.scrollY > 8);
+    };
+
+    onScroll();
+
+    window.addEventListener("scroll", onScroll, {
+      passive: true,
+    });
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, []);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-[#05060f]/80 backdrop-blur-2xl">
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
+    <header
+      className={cn(
+        "sticky top-0 z-50 border-b backdrop-blur-2xl transition-all duration-300",
+        scrolled
+          ? "border-white/10 bg-[#05060f]/90 shadow-glass"
+          : "border-transparent bg-transparent"
+      )}
+    >
+      <div
+        className={cn(
+          "mx-auto flex max-w-6xl items-center justify-between px-6 transition-all duration-300",
+          scrolled ? "h-14" : "h-16"
+        )}
+      >
         <Link href="/" className="flex items-center gap-2 font-bold">
           <ThunderLogo className="h-7 w-7 drop-shadow-[0_0_8px_rgba(232,121,249,0.45)]" />
           CUET Prep Arena
@@ -112,7 +141,7 @@ export function Navbar() {
                     isActive
                       ? "bg-white/10 text-white"
                       : "text-zinc-400 hover:bg-white/5 hover:text-white"
-                  )}
+                    )}
                 >
                   <Icon className="h-4 w-4" />
                   {link.label}
