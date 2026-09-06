@@ -30,14 +30,25 @@ function parseSource(value: string | null): QuestionSource | undefined {
   return undefined;
 }
 
+function parseNumber(value: string | null): number | undefined {
+  if (value === null || value === "") {
+    return undefined;
+  }
+
+  const parsed = Number(value);
+
+  if (typeof parsed !== "number" || !Number.isFinite(parsed)) {
+    return undefined;
+  }
+
+  return parsed;
+}
+
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
 
   const subject = searchParams.get("subject") ?? undefined;
   const topic = searchParams.get("topic") ?? undefined;
-
-  const yearRaw = searchParams.get("year");
-  const limitRaw = searchParams.get("limit");
 
   const difficulty = parseDifficulty(searchParams.get("difficulty"));
   const source = parseSource(searchParams.get("source"));
@@ -47,8 +58,14 @@ export async function GET(request: Request) {
 
   const shuffle = searchParams.get("shuffle") === "true";
 
-  const year = yearRaw ? Number(yearRaw) : undefined;
-  const limit = limitRaw ? Number(limitRaw) : undefined;
+  const year = parseNumber(searchParams.get("year"));
+
+  const parsedLimit = parseNumber(searchParams.get("limit"));
+
+  const limit =
+    typeof parsedLimit === "number" && parsedLimit > 0
+      ? parsedLimit
+      : undefined;
 
   const questions = getQuestions({
     subject,
@@ -57,8 +74,8 @@ export async function GET(request: Request) {
     source,
     includePyq,
     shuffle,
-    year: Number.isFinite(year) ? year : undefined,
-    limit: Number.isFinite(limit) && limit > 0 ? limit : undefined,
+    year,
+    limit,
   });
 
   return NextResponse.json({
