@@ -2,87 +2,242 @@ import Link from "next/link";
 import {
   ArrowRight,
   BookOpen,
+  Brain,
+  GraduationCap,
   LineChart,
   Sparkles,
   Timer,
   Trophy,
 } from "lucide-react";
 
+import { AppShell, PageShell } from "@/components/layout";
+import {
+  Badge,
+  ButtonLink,
+  Card,
+  SectionHeading,
+} from "@/components/ui";
+import { SUBJECTS } from "@/lib/constants";
+
+const stats = [
+  {
+    label: "Practice Questions",
+    value: "500+",
+  },
+  {
+    label: "PYQ Papers",
+    value: "5 Years",
+  },
+  {
+    label: "Analytics",
+    value: "Topic-wise",
+  },
+  {
+    label: "Exam Mode",
+    value: "Timer + Marking",
+  },
+];
+
 const features = [
   {
     icon: BookOpen,
     title: "Practice Mode",
     description:
-      "Custom quizzes by subject, topic, difficulty, and timer settings.",
+      "Subject, topic, difficulty aur timer choose karke custom quiz banao.",
+  },
+  {
+    icon: GraduationCap,
+    title: "PYQ Mode",
+    description:
+      "Previous year papers ko exam-like environment me solve karo.",
   },
   {
     icon: Timer,
-    title: "PYQ Mode",
+    title: "Time Control",
     description:
-      "Solve previous-year style questions with exam-like pressure.",
+      "Timer ring, auto submit aur time tracking ke saath real exam feel.",
   },
   {
     icon: LineChart,
     title: "Smart Analytics",
     description:
-      "Track accuracy, weak topics, time management, and progress.",
+      "Accuracy, weak topics aur time management ko visually track karo.",
+  },
+];
+
+const modes = [
+  {
+    title: "Quick Practice",
+    description: "10-15 questions ka fast session.",
+    href: "/practice",
+    icon: Sparkles,
   },
   {
+    title: "PYQ Arena",
+    description: "Exam pressure ke saath previous year practice.",
+    href: "/pyq",
+    icon: GraduationCap,
+  },
+  {
+    title: "Dashboard",
+    description: "Progress, streaks aur weak topics.",
+    href: "/dashboard",
     icon: Trophy,
-    title: "Score Tracking",
-    description:
-      "See your improvement after every attempt and stay motivated.",
   },
 ];
 
 export default function HomePage() {
   return (
-    <main className="relative min-h-screen overflow-hidden">
-      <div className="pointer-events-none absolute -top-40 left-1/2 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-indigo-500/20 blur-[120px]" />
-      <div className="pointer-events-none absolute bottom-0 right-0 h-[400px] w-[500px] rounded-full bg-cyan-400/10 blur-[100px]" />
+    <AppShell>
+      <PageShell className="py-20">
+        <section className="mx-auto max-w-4xl text-center">
+          <Badge variant="gradient">
+            <Sparkles className="h-3.5 w-3.5" />
+            Built for CUET 2027
+          </Badge>
 
-      <section className="mx-auto flex min-h-screen max-w-6xl flex-col items-center justify-center px-6 py-20 text-center">
-        <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-zinc-300 backdrop-blur-xl">
-          <Sparkles className="h-4 w-4 text-cyan-300" />
-          Built for CUET 2027 aspirants
-        </div>
+          <h1 className="mt-6 text-5xl font-black leading-tight tracking-tight md:text-7xl">
+            Master CUET with
+            <br />
+            <span className="gradient-text">deadly practice</span>
+          </h1>
 
-        <h1 className="max-w-4xl text-5xl font-black leading-tight tracking-tight md:text-7xl">
-          Master CUET with
-          <span className="gradient-text"> deadly practice</span>
-        </h1>
+          <p className="mx-auto mt-6 max-w-2xl text-lg text-zinc-400">
+            Practice quizzes, PYQ mode, timer, score tracking aur topic-wise
+            analytics. Sab kuch ek premium prep arena me.
+          </p>
 
-        <p className="mt-6 max-w-2xl text-lg text-zinc-400 md:text-xl">
-          Practice quizzes, solve PYQs, track your score, and find your weak
-          topics before the real exam does.
-        </p>
+          <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <ButtonLink href="/practice" size="lg">
+              Start Practice
+              <ArrowRight className="h-5 w-5" />
+            </ButtonLink>
 
-        <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-          <Link href="/practice" className="btn-primary">
-            Start Practice
-            <ArrowRight className="h-5 w-5" />
-          </Link>
+            <ButtonLink href="/pyq" variant="secondary" size="lg">
+              Explore PYQs
+            </ButtonLink>
+          </div>
+        </section>
 
-          <Link href="/pyq" className="btn-secondary">
-            Explore PYQs
-          </Link>
-        </div>
-
-        <div className="mt-16 grid w-full gap-6 md:grid-cols-2 lg:grid-cols-4">
-          {features.map((feature) => (
-            <div
-              key={feature.title}
-              className="glass-card p-6 text-left transition hover:scale-[1.02] hover:border-white/20"
-            >
-              <feature.icon className="h-10 w-10 rounded-2xl bg-white/5 p-2 text-cyan-300" />
-              <h3 className="mt-4 text-lg font-semibold">{feature.title}</h3>
-              <p className="mt-2 text-sm leading-6 text-zinc-400">
-                {feature.description}
-              </p>
-            </div>
+        <section className="mt-20 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          {stats.map((stat) => (
+            <Card key={stat.label} className="p-6 text-center">
+              <p className="text-3xl font-black">{stat.value}</p>
+              <p className="mt-2 text-sm text-zinc-400">{stat.label}</p>
+            </Card>
           ))}
-        </div>
-      </section>
-    </main>
+        </section>
+
+        <section className="mt-24">
+          <SectionHeading
+            eyebrow="Features"
+            title="Everything you need to crack CUET"
+            subtitle="Sirf questions solve karna kaafi nahi hai. Tumhe pata hona chahiye ki kahan improvement karni hai."
+            align="center"
+          />
+
+          <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+            {features.map((feature) => (
+              <Card
+                key={feature.title}
+                className="p-6 transition hover:scale-[1.02] hover:border-white/20"
+              >
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/5">
+                  <feature.icon className="h-6 w-6 text-cyan-300" />
+                </div>
+
+                <h3 className="mt-5 text-lg font-semibold">
+                  {feature.title}
+                </h3>
+
+                <p className="mt-2 text-sm leading-6 text-zinc-400">
+                  {feature.description}
+                </p>
+              </Card>
+            ))}
+          </div>
+        </section>
+
+        <section className="mt-24">
+          <SectionHeading
+            eyebrow="Modes"
+            title="Choose your arena"
+            subtitle="Quick practice, PYQ grind ya progress tracking — sab ek click away."
+            align="center"
+          />
+
+          <div className="mt-10 grid gap-6 lg:grid-cols-3">
+            {modes.map((mode) => (
+              <Link
+                key={mode.title}
+                href={mode.href}
+                className="block h-full"
+              >
+                <Card className="h-full p-6 transition hover:scale-[1.02] hover:border-white/20">
+                  <div className="flex items-center justify-between">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/5">
+                      <mode.icon className="h-6 w-6 text-fuchsia-300" />
+                    </div>
+
+                    <ArrowRight className="h-5 w-5 text-zinc-500" />
+                  </div>
+
+                  <h3 className="mt-5 text-lg font-semibold">{mode.title}</h3>
+
+                  <p className="mt-2 text-sm leading-6 text-zinc-400">
+                    {mode.description}
+                  </p>
+                </Card>
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        <section className="mt-24">
+          <SectionHeading
+            eyebrow="Subjects"
+            title="Coverage for major CUET subjects"
+            subtitle="Mathematics, Science, Language, General Test aur domain subjects ke liye practice-ready structure."
+          />
+
+          <div className="mt-8 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+            {SUBJECTS.map((subject) => (
+              <Card key={subject.id} className="p-5">
+                <p className="font-semibold">{subject.name}</p>
+                <p className="mt-1 text-xs uppercase tracking-[0.2em] text-zinc-500">
+                  {subject.section}
+                </p>
+              </Card>
+            ))}
+          </div>
+        </section>
+
+        <section className="mt-24">
+          <Card className="p-10 text-center">
+            <Brain className="mx-auto h-10 w-10 text-cyan-300" />
+
+            <h2 className="mt-6 text-3xl font-black md:text-4xl">
+              Ready to enter the arena?
+            </h2>
+
+            <p className="mx-auto mt-3 max-w-xl text-zinc-400">
+              Aaj se timed practice shuru karo. Har attempt ke baad analytics
+              tumhe batayega ki next kya improve karna hai.
+            </p>
+
+            <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+              <ButtonLink href="/practice" size="lg">
+                Start Your First Quiz
+                <ArrowRight className="h-5 w-5" />
+              </ButtonLink>
+
+              <ButtonLink href="/dashboard" variant="secondary" size="lg">
+                View Dashboard
+              </ButtonLink>
+            </div>
+          </Card>
+        </section>
+      </PageShell>
+    </AppShell>
   );
 }
