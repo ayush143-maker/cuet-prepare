@@ -1,131 +1,158 @@
-import Link from "next/link";
+"use client";
+
+import { useEffect, useState } from "react";
 import {
-  ArrowRight,
-  BookOpen,
-  Flame,
+  Clock,
   History,
-  LineChart,
   Target,
-  Timer,
+  Trash2,
+  TrendingUp,
   Trophy,
 } from "lucide-react";
 
-const recentAttempts = [
-  {
-    id: "attempt_001",
-    title: "Mathematics Practice",
-    score: "42/60",
-    accuracy: "70%",
-    time: "12:48",
-  },
-  {
-    id: "attempt_002",
-    title: "CUET UG 2024 Paper",
-    score: "118/175",
-    accuracy: "76%",
-    time: "41:03",
-  },
-  {
-    id: "attempt_003",
-    title: "Reasoning Drill",
-    score: "18/30",
-    accuracy: "60%",
-    time: "09:22",
-  },
-];
-
-const subjects = [
-  {
-    name: "Mathematics",
-    mastery: 76,
-  },
-  {
-    name: "English",
-    mastery: 68,
-  },
-  {
-    name: "General Test",
-    mastery: 61,
-  },
-  {
-    name: "History",
-    mastery: 48,
-  },
-];
+import { AppShell, PageShell } from "@/components/layout";
+import { Button, ButtonLink } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { EmptyState } from "@/components/ui/empty-state";
+import { Progress } from "@/components/ui/progress";
+import { formatTime } from "@/lib/utils";
+import {
+  getDashboardStats,
+  useAnalyticsStore,
+} from "@/store/analytics-store";
 
 export default function DashboardPage() {
-  return (
-    <main className="relative min-h-screen overflow-hidden">
-      <div className="pointer-events-none absolute -top-32 left-0 h-[400px] w-[500px] rounded-full bg-indigo-500/10 blur-[100px]" />
-      <div className="pointer-events-none absolute bottom-0 right-0 h-[400px] w-[500px] rounded-full bg-cyan-400/10 blur-[100px]" />
+  const [mounted, setMounted] = useState(false);
 
-      <div className="mx-auto max-w-6xl px-6 py-16">
+  const attempts = useAnalyticsStore((state) => state.attempts);
+  const clearHistory = useAnalyticsStore((state) => state.clearHistory);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return (
+      <AppShell>
+        <PageShell>
+          <div className="flex min-h-[50vh] items-center justify-center">
+            <div className="h-12 w-12 animate-spin rounded-full border-2 border-white/20 border-t-cyan-300" />
+          </div>
+        </PageShell>
+      </AppShell>
+    );
+  }
+
+  const stats = getDashboardStats(attempts);
+
+  if (attempts.length === 0) {
+    return (
+      <AppShell>
+        <PageShell>
+          <EmptyState
+            icon={History}
+            title="No attempts yet"
+            description="Abhi tak koi quiz attempt nahi hua. Pehla practice quiz start karo aur apni analytics track karna shuru karo."
+            action={
+              <ButtonLink href="/practice">
+                Start First Quiz
+              </ButtonLink>
+            }
+          />
+        </PageShell>
+      </AppShell>
+    );
+  }
+
+  return (
+    <AppShell>
+      <PageShell>
         <div className="mb-10 flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <div>
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-zinc-300">
-              <Flame className="h-4 w-4 text-amber-300" />
-              7-day streak active
-            </div>
-
             <h1 className="section-title">
-              Your <span className="gradient-text">Prep Dashboard</span>
+              Your <span className="gradient-text">Dashboard</span>
             </h1>
 
             <p className="section-subtitle mt-3">
-              Yahan se pata chalega ki tumhara consistency kaisa chal raha hai.
+              Attempts, accuracy aur time management ek jagah.
             </p>
           </div>
 
-          <Link href="/practice" className="btn-primary">
-            <BookOpen className="h-5 w-5" />
-            Start New Practice
-          </Link>
+          <div className="flex flex-wrap gap-3">
+            <ButtonLink href="/practice">
+              New Practice
+            </ButtonLink>
+
+            <Button variant="secondary" onClick={clearHistory}>
+              <Trash2 className="h-5 w-5" />
+              Clear History
+            </Button>
+          </div>
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-          <div className="glass-card p-6">
-            <Trophy className="h-6 w-6 text-amber-300" />
-            <p className="mt-4 text-sm text-zinc-400">Total Attempts</p>
-            <p className="mt-2 text-3xl font-black">24</p>
-          </div>
+          <Card>
+            <CardContent className="p-6">
+              <Trophy className="h-6 w-6 text-amber-300" />
+              <p className="mt-4 text-sm text-zinc-400">Total Attempts</p>
+              <p className="mt-2 text-3xl font-black">
+                {stats.totalAttempts}
+              </p>
+            </CardContent>
+          </Card>
 
-          <div className="glass-card p-6">
-            <Target className="h-6 w-6 text-cyan-300" />
-            <p className="mt-4 text-sm text-zinc-400">Average Accuracy</p>
-            <p className="mt-2 text-3xl font-black">71%</p>
-          </div>
+          <Card>
+            <CardContent className="p-6">
+              <Target className="h-6 w-6 text-cyan-300" />
+              <p className="mt-4 text-sm text-zinc-400">Average Accuracy</p>
+              <p className="mt-2 text-3xl font-black">
+                {stats.averageAccuracy}%
+              </p>
 
-          <div className="glass-card p-6">
-            <Timer className="h-6 w-6 text-emerald-300" />
-            <p className="mt-4 text-sm text-zinc-400">Avg Time/Question</p>
-            <p className="mt-2 text-3xl font-black">58s</p>
-          </div>
+              <Progress
+                className="mt-4"
+                value={stats.averageAccuracy}
+                max={100}
+              />
+            </CardContent>
+          </Card>
 
-          <div className="glass-card p-6">
-            <LineChart className="h-6 w-6 text-fuchsia-300" />
-            <p className="mt-4 text-sm text-zinc-400">Weekly Growth</p>
-            <p className="mt-2 text-3xl font-black">+12%</p>
-          </div>
+          <Card>
+            <CardContent className="p-6">
+              <Clock className="h-6 w-6 text-emerald-300" />
+              <p className="mt-4 text-sm text-zinc-400">
+                Avg Time / Question
+              </p>
+              <p className="mt-2 text-3xl font-black">
+                {formatTime(stats.averageTimePerQuestionSeconds)}
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardContent className="p-6">
+              <TrendingUp className="h-6 w-6 text-fuchsia-300" />
+              <p className="mt-4 text-sm text-zinc-400">Weekly Growth</p>
+              <p className="mt-2 text-3xl font-black">
+                {stats.weeklyGrowthPercentage}%
+              </p>
+            </CardContent>
+          </Card>
         </div>
 
         <div className="mt-8 grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-          <section className="glass-card p-6">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <History className="h-5 w-5 text-cyan-300" />
-                <h2 className="text-lg font-semibold">Recent Attempts</h2>
-              </div>
+          <Card>
+            <CardHeader>
+              <CardTitle>Recent Attempts</CardTitle>
+            </CardHeader>
 
-              <Link
-                href="/results/demo-attempt"
-                className="text-sm font-medium text-cyan-300 hover:text-white"
-              >
-                View all
-              </Link>
-            </div>
-
-            <div className="mt-4 space-y-4">
-              {recentAttempts.map((attempt) => (
+            <CardContent className="space-y-4">
+              {attempts.slice(0, 8).map((attempt) => (
                 <div
                   key={attempt.id}
                   className="rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:bg-white/10"
@@ -133,65 +160,76 @@ export default function DashboardPage() {
                   <div className="flex flex-wrap items-center justify-between gap-4">
                     <div>
                       <h3 className="font-semibold">{attempt.title}</h3>
+
                       <p className="mt-1 text-sm text-zinc-400">
-                        Score: {attempt.score} • Accuracy: {attempt.accuracy}
+                        Score: {attempt.score}/{attempt.maxScore} • Accuracy:{" "}
+                        {attempt.accuracy}%
                       </p>
                     </div>
 
                     <div className="text-right">
                       <p className="text-sm text-zinc-400">Time</p>
-                      <p className="font-semibold">{attempt.time}</p>
+                      <p className="font-semibold">
+                        {formatTime(attempt.totalTimeTakenSeconds)}
+                      </p>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          </section>
 
-          <section className="glass-card p-6">
-            <div className="flex items-center gap-3">
-              <BookOpen className="h-5 w-5 text-fuchsia-300" />
-              <h2 className="text-lg font-semibold">Subject Mastery</h2>
-            </div>
-
-            <div className="mt-5 space-y-5">
-              {subjects.map((subject) => (
-                <div key={subject.name}>
-                  <div className="flex items-center justify-between text-sm">
-                    <span>{subject.name}</span>
-                    <span className="text-zinc-400">{subject.mastery}%</span>
-                  </div>
-
-                  <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/10">
-                    <div
-                      className="h-full rounded-full bg-gradient-to-r from-indigo-400 via-fuchsia-400 to-cyan-300"
-                      style={{ width: `${subject.mastery}%` }}
-                    />
+                  <div className="mt-4">
+                    <ButtonLink
+                      href={`/results/${attempt.id}`}
+                      variant="secondary"
+                      size="sm"
+                    >
+                      View Result
+                    </ButtonLink>
                   </div>
                 </div>
               ))}
-            </div>
+            </CardContent>
+          </Card>
 
-            <div className="mt-8 rounded-2xl border border-white/10 bg-white/5 p-5">
-              <p className="text-sm font-semibold text-amber-300">
-                Focus Area
-              </p>
-              <p className="mt-2 text-sm leading-6 text-zinc-400">
-                History me mastery kam hai. Aaj 20 PYQ questions se revision
-                start karo.
-              </p>
+          <Card>
+            <CardHeader>
+              <CardTitle>Quick Insight</CardTitle>
+            </CardHeader>
 
-              <Link
-                href="/pyq"
-                className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-cyan-300"
-              >
-                Open PYQs
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </div>
-          </section>
+            <CardContent className="space-y-4">
+              <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+                <p className="text-sm font-semibold text-cyan-300">
+                  Accuracy Focus
+                </p>
+
+                <p className="mt-2 text-sm leading-6 text-zinc-400">
+                  Agar average accuracy 70% se kam hai, to pehle bina timer ke
+                  concept-based questions solve karo.
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+                <p className="text-sm font-semibold text-fuchsia-300">
+                  Time Focus
+                </p>
+
+                <p className="mt-2 text-sm leading-6 text-zinc-400">
+                  Agar average time per question 70s se zyada hai, to short
+                  drills karo: 10 questions, 8 minutes.
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+                <p className="text-sm font-semibold text-emerald-300">
+                  PYQ Focus
+                </p>
+
+                <p className="mt-2 text-sm leading-6 text-zinc-400">
+                  Week me kam se kam 2 PYQ papers exam mode me solve karo.
+                </p>
+              </div>
+            </CardContent>
+          </Card>
         </div>
-      </div>
-    </main>
+      </PageShell>
+    </AppShell>
   );
 }
