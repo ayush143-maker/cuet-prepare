@@ -2,24 +2,21 @@
 
 import Link from "next/link";
 import { use } from "react";
-import { useRouter } from "next/navigation";
 import {
   ArrowLeft,
   BadgeCheck,
   Clock,
   FileText,
   Layers,
-  Play,
   Target,
 } from "lucide-react";
 
 import { AppShell, PageShell } from "@/components/layout";
-import { Badge, Button, Card } from "@/components/ui";
+import { StartPaperButton } from "@/components/pyq";
+import { Badge, Card } from "@/components/ui";
 import { ButtonLink } from "@/components/ui/button";
 import { EmptyState } from "@/components/ui/empty-state";
 import { PYQ_PAPERS } from "@/lib/constants";
-import { useQuizStore } from "@/store/quiz-store";
-import type { QuizConfig } from "@/types/quiz";
 
 type Props = {
   params: Promise<{
@@ -29,9 +26,6 @@ type Props = {
 
 export default function PyqPaperPage({ params }: Props) {
   const { paperId } = use(params);
-  const router = useRouter();
-
-  const startQuiz = useQuizStore((state) => state.startQuiz);
 
   const paper = PYQ_PAPERS.find((item) => item.id === paperId);
 
@@ -53,32 +47,6 @@ export default function PyqPaperPage({ params }: Props) {
       </AppShell>
     );
   }
-
-  const startPaper = () => {
-    const config: QuizConfig = {
-      mode: "pyq",
-      title: paper.title,
-      section: paper.section,
-      subject: paper.subject,
-      topics: [],
-      difficulty: "mixed",
-      year: paper.year,
-      questionCount: paper.totalQuestions,
-      timeLimitSeconds: paper.durationMinutes * 60,
-      shuffleQuestions: true,
-      shuffleOptions: false,
-      showExplanationAfterSubmit: true,
-      showExplanationInstantly: false,
-    };
-
-    startQuiz(config);
-
-    const sessionId = useQuizStore.getState().session?.id;
-
-    if (sessionId) {
-      router.push(`/quiz/${sessionId}`);
-    }
-  };
 
   return (
     <AppShell>
@@ -134,16 +102,14 @@ export default function PyqPaperPage({ params }: Props) {
               <BadgeCheck className="h-5 w-5 text-cyan-300" />
               <p className="mt-3 text-sm text-zinc-400">Marking</p>
               <p className="mt-1 text-lg font-semibold">
-                +{paper.markingScheme.correct} / {paper.markingScheme.incorrect}
+                +{paper.markingScheme.correct} /{" "}
+                {paper.markingScheme.incorrect}
               </p>
             </div>
           </div>
 
           <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-            <Button onClick={startPaper} size="lg">
-              <Play className="h-5 w-5" />
-              Start Paper
-            </Button>
+            <StartPaperButton paper={paper} />
 
             <ButtonLink href="/dashboard" variant="secondary" size="lg">
               View Past Attempts
