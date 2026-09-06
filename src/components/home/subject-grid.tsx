@@ -1,27 +1,35 @@
-import { SUBJECTS } from "@/lib/constants";
-
-import { Card } from "@/components/ui/card";
 import { SectionHeading } from "@/components/ui/section-heading";
+import { SUBJECTS } from "@/lib/constants";
 
 export function SubjectGrid() {
   return (
-    <section className="mt-24">
+    <section className="mt-28">
       <SectionHeading
+        align="center"
         eyebrow="Subjects"
-        title="Coverage for major CUET subjects"
-        subtitle="Mathematics, Science, Language, General Test aur domain subjects ke liye practice-ready structure."
+        title="Coverage across CUET domains"
+        subtitle="Language, domain aur general test — sab ek hi arena me."
       />
 
-      <div className="mt-8 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-        {SUBJECTS.map((subject) => (
-          <Card key={subject.id} className="p-5">
-            <p className="font-semibold">{subject.name}</p>
+      <div className="mt-12 overflow-hidden [mask-image:linear-gradient(to right, transparent, black 12%, black 88%, transparent)]">
+        <div className="animate-marquee flex w-max">
+          {[0, 1].map((duplicate) => (
+            <div key={duplicate} className="flex gap-4 pr-4">
+              {SUBJECTS.map((subject) => (
+                <div
+                  key={`${subject.id}-${duplicate}`}
+                  className="glass-card flex items-center gap-3 whitespace-nowrap px-6 py-4"
+                >
+                  <span className="font-semibold">{subject.name}</span>
 
-            <p className="mt-1 text-xs uppercase tracking-[0.2em] text-zinc-500">
-              {subject.section}
-            </p>
-          </Card>
-        ))}
+                  <span className="text-xs uppercase tracking-[0.2em] text-zinc-500">
+                    {subject.section}
+                  </span>
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
