@@ -4,6 +4,10 @@ import type { DifficultyFilter } from "@/types/quiz";
 import { shuffleArray } from "./utils";
 
 import sampleQuestionsRaw from "../../data/questions/sample.json";
+import mathematicsQuestionsRaw from "../../data/questions/mathematics.json";
+import generalTestQuestionsRaw from "../../data/questions/general-test.json";
+import englishQuestionsRaw from "../../data/questions/english.json";
+import scienceQuestionsRaw from "../../data/questions/science.json";
 import pyq2022Raw from "../../data/pyq/2022.json";
 import pyq2023Raw from "../../data/pyq/2023.json";
 import pyq2024Raw from "../../data/pyq/2024.json";
@@ -66,6 +70,10 @@ function normalizeQuestions(
 
 const loadedQuestions: Question[] = [
   ...normalizeQuestions(sampleQuestionsRaw, "sample"),
+  ...normalizeQuestions(mathematicsQuestionsRaw, "sample"),
+  ...normalizeQuestions(generalTestQuestionsRaw, "sample"),
+  ...normalizeQuestions(englishQuestionsRaw, "sample"),
+  ...normalizeQuestions(scienceQuestionsRaw, "sample"),
   ...normalizeQuestions(pyq2022Raw, "pyq"),
   ...normalizeQuestions(pyq2023Raw, "pyq"),
   ...normalizeQuestions(pyq2024Raw, "pyq"),
