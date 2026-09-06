@@ -19,23 +19,37 @@ function normalizeSubjects(raw: unknown): SubjectMeta[] {
     return [];
   }
 
-  return raw
-    .map((item) => {
-      const subject = {
-        ...(item as Record<string, unknown>),
-      } as SubjectMeta;
+  return raw.flatMap((item): SubjectMeta[] => {
+    const record = item as Record<string, unknown>;
 
-      return subject;
-    })
-    .filter((subject) => {
-      return (
-        typeof subject.id === "string" &&
-        subject.id.length > 0 &&
-        typeof subject.name === "string" &&
-        subject.name.length > 0 &&
-        isValidSection(subject.section)
-      );
-    });
+    const id = record.id;
+    const name = record.name;
+    const section = record.section;
+
+    if (
+      typeof id !== "string" ||
+      id.length === 0 ||
+      typeof name !== "string" ||
+      name.length === 0 ||
+      !isValidSection(section)
+    ) {
+      return [];
+    }
+
+    const subject: SubjectMeta = {
+      id,
+      name,
+      section,
+      icon: typeof record.icon === "string" ? record.icon : undefined,
+      color: typeof record.color === "string" ? record.color : undefined,
+      description:
+        typeof record.description === "string"
+          ? record.description
+          : undefined,
+    };
+
+    return [subject];
+  });
 }
 
 function normalizeTopics(raw: unknown): TopicMeta[] {
@@ -43,24 +57,40 @@ function normalizeTopics(raw: unknown): TopicMeta[] {
     return [];
   }
 
-  return raw
-    .map((item) => {
-      const topic = {
-        ...(item as Record<string, unknown>),
-      } as TopicMeta;
+  return raw.flatMap((item): TopicMeta[] => {
+    const record = item as Record<string, unknown>;
 
-      return topic;
-    })
-    .filter((topic) => {
-      return (
-        typeof topic.id === "string" &&
-        topic.id.length > 0 &&
-        typeof topic.subjectId === "string" &&
-        topic.subjectId.length > 0 &&
-        typeof topic.name === "string" &&
-        topic.name.length > 0
-      );
-    });
+    const id = record.id;
+    const subjectId = record.subjectId;
+    const name = record.name;
+
+    if (
+      typeof id !== "string" ||
+      id.length === 0 ||
+      typeof subjectId !== "string" ||
+      subjectId.length === 0 ||
+      typeof name !== "string" ||
+      name.length === 0
+    ) {
+      return [];
+    }
+
+    const topic: TopicMeta = {
+      id,
+      subjectId,
+      name,
+      weightage:
+        typeof record.weightage === "number"
+          ? record.weightage
+          : undefined,
+      pyqAvailable:
+        typeof record.pyqAvailable === "boolean"
+          ? record.pyqAvailable
+          : undefined,
+    };
+
+    return [topic];
+  });
 }
 
 export const subjects: SubjectMeta[] = normalizeSubjects(subjectsRaw);
