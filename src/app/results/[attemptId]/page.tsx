@@ -1,15 +1,17 @@
 "use client";
 
 import { use, useEffect, useState } from "react";
-import { FileSearch } from "lucide-react";
+import { FileSearch, PartyPopper } from "lucide-react";
 
 import { AppShell, PageShell } from "@/components/layout";
+import { ConfettiTrigger } from "@/components/quiz";
 import {
   ResultActions,
   ScoreSummary,
   TopicStats,
   WeakTopics,
 } from "@/components/results";
+import { Badge } from "@/components/ui/badge";
 import { ButtonLink } from "@/components/ui/button";
 import { EmptyState } from "@/components/ui/empty-state";
 import { useAnalyticsStore } from "@/store/analytics-store";
@@ -67,16 +69,27 @@ export default function ResultsPage({ params }: Props) {
     );
   }
 
+  const isStrongPerformance = result.accuracy >= 80;
+
   return (
     <AppShell>
       <PageShell>
+        <ConfettiTrigger fire={isStrongPerformance} />
+
         <div className="mb-10 flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
           <div>
-            <p className="text-sm text-zinc-400">
-              Attempt ID: {result.id}
-            </p>
+            <div className="flex flex-wrap items-center gap-3">
+              <Badge variant="gradient">Attempt Result</Badge>
 
-            <h1 className="mt-2 text-3xl font-black md:text-5xl">
+              {isStrongPerformance ? (
+                <Badge variant="success">
+                  <PartyPopper className="h-3.5 w-3.5" />
+                  Strong Performance
+                </Badge>
+              ) : null}
+            </div>
+
+            <h1 className="mt-4 text-3xl font-black md:text-5xl">
               Result <span className="gradient-text">Analysis</span>
             </h1>
 
