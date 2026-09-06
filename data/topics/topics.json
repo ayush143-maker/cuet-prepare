@@ -1,0 +1,72 @@
+[
+  {
+    "id": "math_matrices",
+    "subjectId": "mathematics",
+    "name": "Matrices",
+    "weightage": 8,
+    "pyqAvailable": true
+  },
+  {
+    "id": "math_probability",
+    "subjectId": "mathematics",
+    "name": "Probability",
+    "weightage": 10,
+    "pyqAvailable": true
+  },
+  {
+    "id": "math_calculus",
+    "subjectId": "mathematics",
+    "name": "Calculus",
+    "weightage": 12,
+    "pyqAvailable": true
+  },
+  {
+    "id": "physics_mechanics",
+    "subjectId": "physics",
+    "name": "Mechanics",
+    "weightage": 12,
+    "pyqAvailable": true
+  },
+  {
+    "id": "physics_current_electricity",
+    "subjectId": "physics",
+    "name": "Current Electricity",
+    "weightage": 9,
+    "pyqAvailable": true
+  },
+  {
+    "id": "english_grammar",
+    "subjectId": "english",
+    "name": "Grammar",
+    "weightage": 10,
+    "pyqAvailable": true
+  },
+  {
+    "id": "english_rc",
+    "subjectId": "english",
+    "name": "Reading Comprehension",
+    "weightage": 12,
+    "pyqAvailable": true
+  },
+  {
+    "id": "general_logical_reasoning",
+    "subjectId": "general-test",
+    "name": "Logical Reasoning",
+    "weightage": 14,
+    "pyqAvailable": true
+  },
+  {
+    "id": "general_quant",
+    "subjectId": "general-test",
+    "name": "Quantitative Aptitude",
+    "weightage": 12,
+    "pyqAvailable": true
+  },
+  {
+    "id": "history_modern_india",
+    "subjectId": "history",
+    "name": "Modern India",
+    "weightage": 11,
+    "pyqAvailable": true
+  }
+]
